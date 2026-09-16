@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>FBI — Операция «OVERLORD»</title>
+
+<style>
+:root{
+  --bg:#101317;
+  --panel:#151b21;
+  --paper:#e9e4d9;
+  --ink:#202831;
+  --muted:#7f8992;
+  --line:#59636d;
+  --gold:#b6a06a;
+  --red:#8e2929;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:radial-gradient(circle at 50% 0,#30343a,#0e1013 65%);
+  font-family:Georgia,"Times New Roman",serif;
+  color:var(--ink);
+}
+
+button{font:inherit}
+
+.archive{
+  width:min(1240px,94vw);
+  min-height:790px;
+  margin:34px auto;
+  display:grid;
+  grid-template-columns:290px 1fr;
+  box-shadow:0 30px 80px #000b;
+  border-radius:7px;
+  overflow:hidden;
+}
+
+.side{
+  background:linear-gradient(180deg,#202a34,#10161c);
+  color:#e8edf0;
+  padding:27px 19px;
+  position:relative;
+}
+
+.seal{
+  width:106px;
+  height:106px;
+  border:2px solid #b8a779;
+  border-radius:50%;
+  margin:auto;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  font:10px Arial,sans-serif;
+  letter-spacing:1.4px;
+  color:#d4c7a1;
+  box-shadow:inset 0 0 0 6px #b8a77918;
+}
+
+.title{
+  text-align:center;
+  margin-top:17px;
+  font:bold 14px Arial,sans-serif;
+  letter-spacing:2px;
+}
+
+.subtitle{
+  text-align:center;
+  color:#94a0aa;
+  font:9px Arial,sans-serif;
+  letter-spacing:2px;
+  margin-top:7px;
+}
+
+.tabs{
+  display:grid;
+  gap:6px;
+  margin-top:27px;
+}
+
+.tab{
+  background:#ffffff08;
+  border:1px solid #ffffff12;
+  color:#dbe0e4;
+  padding:12px 10px;
+  text-align:left;
+  cursor:pointer;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  transition:.15s;
+}
+
+.tab:hover,.tab.active{
+  background:#e8e3d8;
+  color:#17202a;
+}
+
+.num{
+  color:#b6a06a;
+  font:10px Arial,sans-serif;
+  min-width:25px;
+}
+
+.active .num{color:var(--red)}
+
+.classified{
+  position:absolute;
+  bottom:18px;
+  left:19px;
+  right:19px;
+  border-top:1px solid #ffffff18;
+  padding-top:12px;
+  font:9px Arial,sans-serif;
+  letter-spacing:1.3px;
+  color:#84909a;
+}
+
+.paper{
+  background:
+    linear-gradient(90deg,#0000000b,transparent 5%,transparent 95%,#0000000a),
+    repeating-linear-gradient(0deg,#5d4f3b05 0 1px,transparent 1px 4px),
+    var(--paper);
+  padding:43px 52px 75px;
+  position:relative;
+  min-height:790px;
+}
+
+.paper:before{
+  content:"";
+  position:absolute;
+  inset:12px;
+  border:1px solid #4e473d2e;
+  pointer-events:none;
+}
+
+.page{
+  display:none;
+  position:relative;
+  z-index:1;
+  animation:in .2s ease;
+}
+
+.page.active{display:block}
+
+@keyframes in{
+  from{opacity:0;transform:translateY(5px)}
+  to{opacity:1;transform:none}
+}
+
+.head{
+  display:flex;
+  justify-content:space-between;
+  border-bottom:2px solid #17202a;
+  padding-bottom:12px;
+}
+
+.kicker{
+  font:10px Arial,sans-serif;
+  letter-spacing:2px;
+  color:#737b82;
+}
+
+.head h1{
+  font-size:32px;
+  font-weight:normal;
+  margin:7px 0 0;
+}
+
+.code{
+  font:10px Arial,sans-serif;
+  color:#777;
+  letter-spacing:1px;
+}
+
+.stamp{
+  display:inline-block;
+  border:2px solid var(--red);
+  color:var(--red);
+  padding:6px 11px;
+  margin:18px 0 8px;
+  font:bold 10px Arial,sans-serif;
+  letter-spacing:2px;
+  transform:rotate(-2deg);
+}
+
+.lead{
+  font-size:18px;
+  line-height:1.6;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:13px;
+  margin-top:22px;
+}
+
+.card{
+  border:1px solid #aaa193;
+  background:#ffffff17;
+  padding:15px;
+  min-height:125px;
+  cursor:pointer;
+  transition:.15s;
+}
+
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 7px 15px #0001;
+}
+
+.tag{
+  font:9px Arial,sans-serif;
+  letter-spacing:1.5px;
+  color:var(--red);
+}
+
+.card h3{
+  margin:7px 0;
+  font-size:18px;
+  font-weight:normal;
+}
+
+.card p{
+  margin:4px 0;
+  font-size:13px;
+  line-height:1.45;
+}
+
+.info{
+  border-left:4px solid var(--gold);
+  padding:12px 15px;
+  background:#b6a06a10;
+  margin:18px 0;
+  line-height:1.55;
+}
+
+.record{
+  border-top:1px solid #aaa193;
+  padding:13px 0;
+}
+
+.record b{
+  font:9px Arial,sans-serif;
+  letter-spacing:1px;
+  color:#737b82;
+  display:block;
+  margin-bottom:4px;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:#0009;
+  z-index:10;
+  place-items:center;
+  padding:20px;
+}
+
+.modal.open{display:grid}
+
+.modalbox{
+  width:min(720px,94vw);
+  max-height:85vh;
+  overflow:auto;
+  background:var(--paper);
+  padding:30px;
+  box-shadow:0 25px 70px #000;
+}
+
+.modalbox h2{
+  font-weight:normal;
+  margin-top:0;
+}
+
+.close{
+  float:right;
+  border:0;
+  background:none;
+  font-size:24px;
+  cursor:pointer;
+}
+
+.footer{
+  position:absolute;
+  bottom:20px;
+  left:52px;
+  right:52px;
+  border-top:1px solid #aaa193;
+  padding-top:8px;
+  display:flex;
+  justify-content:space-between;
+  font:9px Arial,sans-serif;
+  color:#777;
+  letter-spacing:1px;
+}
+
+@media(max-width:820px){
+  .archive{
+    grid-template-columns:1fr;
+    margin:10px auto;
+  }
+
+  .side{padding-bottom:25px}
+  .classified{display:none}
+  .tabs{grid-template-columns:repeat(2,1fr)}
+  .paper{padding:30px 24px 70px}
+  .grid{grid-template-columns:1fr}
+  .footer{left:24px;right:24px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="archive">
+
+<aside class="side">
+
+  <div class="seal">
+    FEDERAL<br>
+    BUREAU<br>
+    OF<br>
+    INVESTIGATION<br>
+    <br>
+    SA
+  </div>
+
+  <div class="title">ОПЕРАЦИЯ «OVERLORD»</div>
+  <div class="subtitle">FBI · LSPD · STATE OF SAN ANDREAS</div>
+
+  <nav class="tabs">
+    <button class="tab active" data-page="p1">
+      <span class="num">01</span>Операция
+    </button>
+
+    <button class="tab" data-page="p2">
+      <span class="num">02</span>Цели и задачи
+    </button>
+
+    <button class="tab" data-page="p3">
+      <span class="num">03</span>Участники
+    </button>
+
+    <button class="tab" data-page="p4">
+      <span class="num">04</span>Приоритетные цели
+    </button>
+
+    <button class="tab" data-page="p5">
+      <span class="num">05</span>Ход операции
+    </button>
+
+    <button class="tab" data-page="p6">
+      <span class="num">06</span>Итоги
+    </button>
+  </nav>
+
+  <div class="classified">
+    CLASSIFICATION: RESTRICTED / RP<br>
+    OPERATION № OVERLORD-001
+  </div>
+
+</aside>
+
+
+<main class="paper">
+
+<!-- PAGE 1 -->
+<section class="page active" id="p1">
+
+  <div class="head">
+    <div>
+      <div class="kicker">SPECIAL OPERATION</div>
+      <h1>Операция «OVERLORD»</h1>
+    </div>
+    <div class="code">FILE 01 / 06</div>
+  </div>
+
+  <div class="stamp">OPERATION ACTIVE</div>
+
+  <p class="lead">
+    Совместная специальная операция Federal Bureau of Investigation
+    и Los Santos Police Department по пресечению организованной
+    преступной деятельности в опасном районе Los Santos.
+  </p>
+
+  <div class="info">
+    <b>СТАТУС ОПЕРАЦИИ</b>
+    Активная специальная операция. Основная задача — восстановление
+    контроля над районом, задержание лиц, подозреваемых в совершении
+    преступлений, пресечение оборота наркотиков и незаконного оружия, а так же присечение террористических группировок. Код допуска: lvl 9. Приказ об начале операции «OVERLORD» выдан Директором Федерального Бюро - Amanda Hughes, уровень допуска lvl 10.
+  </div>
+
+  <div class="grid">
+
+    <div class="card" data-modal="ОПЕРАТИВНАЯ ЗОНА">
+      <div class="tag">AREA OF OPERATION</div>
+      <h3>Опасный район Los Santos</h3>
+      <p>
+        Район с повышенной концентрацией преступной активности,
+        незаконного оборота наркотиков, вооруженных лиц и террористических группировок.
+      </p>
+    </div>
+
+    <div class="card" data-modal="КООРДИНАЦИЯ">
+      <div class="tag">JOINT OPERATION</div>
+      <h3>FBI × LSPD</h3>
+      <p>
+        Федеральные агенты и сотрудники полиции действуют
+        совместно в рамках единого оперативного плана.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PAGE 2 -->
+<section class="page" id="p2">
+
+  <div class="head">
+    <div>
+      <div class="kicker">MISSION OBJECTIVES</div>
+      <h1>Цели и задачи</h1>
+    </div>
+    <div class="code">FILE 02 / 06</div>
+  </div>
+
+  <div class="stamp">PRIORITY</div>
+
+  <p class="lead">
+    Операция направлена на пресечение преступной деятельности
+    и установление контроля государственных служб над районом.
+  </p>
+
+  <div class="grid">
+
+    <div class="card" data-modal="ЗАДАЧА 01">
+      <div class="tag">ARREST</div>
+      <h3>Задержание</h3>
+      <p>
+        Выявление и задержание разыскиваемых и подозреваемых
+        в преступной деятельности лиц.
+      </p>
+    </div>
+
+    <div class="card" data-modal="ЗАДАЧА 02">
+      <div class="tag">NARCOTICS</div>
+      <h3>Наркотики</h3>
+      <p>
+        Пресечение распространения и незаконного хранения
+        наркотических средств.
+      </p>
+    </div>
+
+    <div class="card" data-modal="ЗАДАЧА 03">
+      <div class="tag">WEAPONS</div>
+      <h3>Оружие</h3>
+      <p>
+        Выявление незаконного хранения и оборота оружия
+        и боеприпасов.
+      </p>
+    </div>
+
+    <div class="card" data-modal="ЗАДАЧА 04">
+      <div class="tag">CRIME GROUPS</div>
+      <h3>Преступные группы</h3>
+      <p>
+        Установление участников и пресечение деятельности
+        организованных преступных групп.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PAGE 3 -->
+<section class="page" id="p3">
+
+  <div class="head">
+    <div>
+      <div class="kicker">JOINT TASK FORCE</div>
+      <h1>Участники операции</h1>
+    </div>
+    <div class="code">FILE 03 / 06</div>
+  </div>
+
+  <div class="stamp">AUTHORIZED PERSONNEL</div>
+
+  <div class="grid">
+
+    <div class="card" data-modal="FEDERAL BUREAU OF INVESTIGATION">
+      <div class="tag">FEDERAL AGENCY</div>
+      <h3>FBI</h3>
+      <p>
+        Координация операции, оперативная работа, сбор информации,
+        установление подозреваемых и документирование преступлений.
+      </p>
+    </div>
+
+    <div class="card" data-modal="LOS SANTOS POLICE DEPARTMENT">
+      <div class="tag">LAW ENFORCEMENT</div>
+      <h3>LSPD</h3>
+      <p>
+        Охрана общественного порядка, патрулирование района,
+        задержания и обеспечение безопасности граждан.
+      </p>
+    </div>
+
+    <div class="card" data-modal="SWAT SUPPORT">
+      <div class="tag">TACTICAL SUPPORT</div>
+      <h3>SWAT - Не активно.</h3>
+      <p>
+        Тактическая поддержка при ситуациях повышенного риска
+        и задержании вооружённых подозреваемых.
+      </p>
+    </div>
+
+    <div class="card" data-modal="OPERATION COMMAND">
+      <div class="tag">COMMAND</div>
+      <h3>NG Национальная Гвардия</h3>
+      <p>
+        Координация действий подразделений, распределение задач
+        и контроль выполнения оперативного плана. Оказание помощи Агентам Бюро, а так же офицерам полиции.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="info">
+    <b>ПРИНЦИП ВЗАИМОДЕЙСТВИЯ</b>
+    FBI, NG и LSPD работают в рамках единой операции, сохраняя
+    распределение полномочий и обязанностей своих подразделений.
+  </div>
+
+</section>
+
+
+<!-- PAGE 4 -->
+<section class="page" id="p4">
+
+  <div class="head">
+    <div>
+      <div class="kicker">TARGET PRIORITIES</div>
+      <h1>Приоритетные цели</h1>
+    </div>
+    <div class="code">FILE 04 / 06</div>
+  </div>
+
+  <div class="stamp">HIGH RISK AREA</div>
+
+  <p class="lead">
+    Основное внимание уделяется лицам, деятельность которых
+    представляет непосредственную угрозу гражданам и сотрудникам
+    государственных служб.
+  </p>
+
+  <div class="grid">
+
+    <div class="card" data-modal="TARGET A">
+      <div class="tag">PRIORITY A</div>
+      <h3>Разыскиваемые лица</h3>
+      <p>
+        Лица, находящиеся в официальном розыске или имеющие
+        действующие основания для задержания.
+      </p>
+    </div>
+
+    <div class="card" data-modal="TARGET B">
+      <div class="tag">PRIORITY B</div>
+      <h3>Распространители наркотиков</h3>
+      <p>
+        Лица, замеченные в незаконном обороте либо распространении
+        запрещённых веществ.
+      </p>
+    </div>
+
+    <div class="card" data-modal="TARGET C">
+      <div class="tag">PRIORITY C</div>
+      <h3>Вооружённые преступники</h3>
+      <p>
+        Лица, незаконно владеющие оружием либо оказывающие
+        вооружённое сопротивление.
+      </p>
+    </div>
+
+    <div class="card" data-modal="TARGET D">
+      <div class="tag">PRIORITY D</div>
+      <h3>Организаторы преступности</h3>
+      <p>
+        Участники преступных групп, организаторы незаконной
+        деятельности и лица, координирующие её проведение.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PAGE 5 -->
+<section class="page" id="p5">
+
+  <div class="head">
+    <div>
+      <div class="kicker">OPERATION PHASES</div>
+      <h1>Ход операции</h1>
+    </div>
+    <div class="code">FILE 05 / 06</div>
+  </div>
+
+  <div class="stamp">OPERATIONAL PLAN</div>
+
+  <div class="grid">
+
+    <div class="card" data-modal="PHASE I — INTELLIGENCE">
+      <div class="tag">PHASE I</div>
+      <h3>«SHADOW» — Сбор информации</h3>
+      <p>
+        Анализ имеющихся сведений, установление подозреваемых,
+        мест преступной активности и оперативных связей.
+      </p>
+    </div>
+
+    <div class="card" data-modal="PHASE II — CONTROL">
+      <div class="tag">PHASE II</div>
+      <h3>«LOCKDOWN» — Контроль района</h3>
+      <p>
+        Усиление присутствия государственных служб и контроль
+        обстановки в оперативной зоне.
+      </p>
+    </div>
+
+    <div class="card" data-modal="PHASE III — ARREST">
+      <div class="tag">PHASE III</div>
+      <h3>«BREACH» — Активная фаза</h3>
+      <p>
+        Проведение задержаний, пресечение преступлений,
+        изъятие запрещённых предметов и документирование событий.
+      </p>
+    </div>
+
+    <div class="card" data-modal="PHASE IV — REPORT">
+      <div class="tag">PHASE IV</div>
+      <h3>«CLEANUP» — Завершение</h3>
+      <p>
+        Проверка территории, оформление материалов, передача
+        задержанных и подготовка итогового отчёта.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="info">
+    <b>ПРИМЕНЕНИЕ СИЛЫ</b>
+    При возникновении вооружённого сопротивления сотрудники
+    действуют согласно установленным правилам Штата SA. Приоритетом является задержание подозреваемых
+    и безопасность граждан и сотрудников.
+  </div>
+
+</section>
+
+
+<!-- PAGE 6 -->
+<section class="page" id="p6">
+
+  <div class="head">
+    <div>
+      <div class="kicker">FINAL REPORT</div>
+      <h1>Итоги операции</h1>
+    </div>
+    <div class="code">FILE 06 / 06</div>
+  </div>
+
+  <div class="stamp">REPORT REQUIRED</div>
+
+  <p class="lead">
+    По завершении операции формируется единый итоговый отчёт
+    с фиксацией результатов совместной работы FBI и LSPD.
+  </p>
+
+  <div class="record">
+    <b>ЗАДЕРЖАННЫЕ</b>
+    Количество и данные задержанных лиц.
+  </div>
+
+  <div class="record">
+    <b>ИЗЪЯТЫЕ ПРЕДМЕТЫ</b>
+    Наркотические средства, оружие, боеприпасы и иные
+    запрещённые предметы, обнаруженные в ходе операции.
+  </div>
+
+  <div class="record">
+    <b>ДОКАЗАТЕЛЬСТВА</b>
+    Фото-, видео- и иные материалы, подтверждающие
+    проведение мероприятий и выявленные нарушения.
+  </div>
+
+  <div class="record">
+    <b>СОСТАВ УЧАСТНИКОВ</b>
+    Список сотрудников FBI, LSPD и привлечённых подразделений.
+  </div>
+
+  <div class="record">
+    <b>РЕЗУЛЬТАТ</b>
+    Итоговое состояние оперативной зоны после завершения
+    специальной операции.
+  </div>
+
+  <div class="info">
+    <b>OVERLORD / FINAL STATUS</b>
+    Операция считается завершённой после окончания активной фазы,
+    оформления материалов и передачи итогового отчёта руководству.
+  </div>
+
+</section>
+
+
+<div class="footer">
+  <span>FBI · OPERATION OVERLORD · STATE OF SAN ANDREAS</span>
+  <span id="pageNo">FILE 01 / 06</span>
+</div>
+
+</main>
+</div>
+
+
+<div class="modal" id="modal">
+  <div class="modalbox">
+    <button class="close" id="close">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+
+<script>
+const tabs=[...document.querySelectorAll('.tab')];
+const pages=[...document.querySelectorAll('.page')];
+const pageNo=document.getElementById('pageNo');
+const modal=document.getElementById('modal');
+const content=document.getElementById('modalContent');
+
+const DETAILS={
+  "ОПЕРАТИВНАЯ ЗОНА":{
+    title:"Опасный район Los Santos",
+    tag:"AREA OF OPERATION",
+    description:"Оперативная зона операции «OVERLORD». Здесь государственные службы проводят совместные мероприятия по пресечению преступной деятельности."
+  },
+  "КООРДИНАЦИЯ":{
+    title:"FBI × LSPD",
+    tag:"JOINT OPERATION",
+    description:"Федеральное бюро расследований осуществляет координацию и оперативную работу, а LSPD обеспечивает полицейское присутствие, порядок и поддержку."
+  },
+  "ЗАДАЧА 01":{
+    title:"Задержание",
+    tag:"ARREST",
+    description:"Установление и задержание лиц, в отношении которых имеются законные основания для задержания либо сведения об их причастности к преступлениям."
+  },
+  "ЗАДАЧА 02":{
+    title:"Наркотики",
+    tag:"NARCOTICS",
+    description:"Выявление и пресечение незаконного оборота и распространения наркотических средств."
+  },
+  "ЗАДАЧА 03":{
+    title:"Оружие",
+    tag:"WEAPONS",
+    description:"Выявление незаконного хранения и оборота оружия и боеприпасов с последующим документированием и изъятием."
+  },
+  "ЗАДАЧА 04":{
+    title:"Преступные группы",
+    tag:"CRIME GROUPS",
+    description:"Установление участников организованных преступных групп и пресечение их деятельности."
+  },
+  "FEDERAL BUREAU OF INVESTIGATION":{
+    title:"Federal Bureau of Investigation",
+    tag:"FEDERAL AGENCY",
+    description:"Координация операции, сбор и анализ оперативной информации, установление подозреваемых и документирование выявленных преступлений."
+  },
+  "LOS SANTOS POLICE DEPARTMENT":{
+    title:"Los Santos Police Department",
+    tag:"LAW ENFORCEMENT",
+    description:"Охрана общественного порядка, патрулирование, задержание подозреваемых и обеспечение безопасности граждан."
+  },
+  "SWAT SUPPORT":{
+    title:"SWAT — Tactical Support",
+    tag:"TACTICAL SUPPORT",
+    description:"Привлечение тактического подразделения при возникновении ситуаций повышенного риска в рамках RP."
+  },
+  "OPERATION COMMAND":{
+    title:"Штаб операции",
+    tag:"COMMAND",
+    description:"Контроль выполнения общего плана, распределение задач между подразделениями и координация совместных действий."
+  },
+  "TARGET A":{
+    title:"Разыскиваемые лица",
+    tag:"PRIORITY A",
+    description:"Лица, находящиеся в официальном розыске либо имеющие действующие основания для задержания."
+  },
+  "TARGET B":{
+    title:"Распространители наркотиков",
+    tag:"PRIORITY B",
+    description:"Лица, в отношении которых имеются оперативные сведения о незаконном обороте или распространении запрещённых веществ."
+  },
+  "TARGET C":{
+    title:"Вооружённые преступники",
+    tag:"PRIORITY C",
+    description:"Лица, незаконно владеющие оружием либо оказывающие вооружённое сопротивление государственным служащим."
+  },
+  "TARGET D":{
+    title:"Организаторы преступности",
+    tag:"PRIORITY D",
+    description:"Участники и организаторы преступных групп, координирующие незаконную деятельность."
+  },
+  "PHASE I — INTELLIGENCE":{
+    title:"«SHADOW» — Сбор информации",
+    tag:"PHASE I",
+    description:"Первичный этап операции: анализ сведений, установление подозреваемых, мест преступной активности и оперативных связей."
+  },
+  "PHASE II — CONTROL":{
+    title:"«LOCKDOWN» — Контроль района",
+    tag:"PHASE II",
+    description:"Усиление присутствия государственных служб и контроль оперативной зоны."
+  },
+  "PHASE III — ARREST":{
+    title:"«BREACH» — Активная фаза",
+    tag:"PHASE III",
+    description:"Проведение задержаний, пресечение преступлений, изъятие запрещённых предметов и фиксация результатов."
+  },
+  "PHASE IV — REPORT":{
+    title:"«CLEANUP» — Завершение",
+    tag:"PHASE IV",
+    description:"Окончательная проверка территории, оформление материалов и подготовка итогового отчёта."
+  }
+};
+
+function esc(v){
+  return String(v ?? "").replace(/[&<>"']/g,m=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
+  }[m]));
+}
+
+function show(id){
+  tabs.forEach(x=>x.classList.toggle('active',x.dataset.page===id));
+  pages.forEach(x=>x.classList.toggle('active',x.id===id));
+
+  const n=tabs.findIndex(x=>x.dataset.page===id)+1;
+  pageNo.textContent=`FILE ${String(n).padStart(2,'0')} / 06`;
+
+  history.replaceState(null,'',`#${id}`);
+}
+
+tabs.forEach(x=>x.onclick=()=>show(x.dataset.page));
+
+if(document.getElementById(location.hash.slice(1))){
+  show(location.hash.slice(1));
+}
+
+document.querySelectorAll('.card').forEach(card=>{
+  card.onclick=()=>{
+    const key=card.dataset.modal;
+    const d=DETAILS[key] || {
+      title:key,
+      tag:"CLASSIFIED RECORD",
+      description:"Дополнительные сведения по данной записи операции."
+    };
+
+    content.innerHTML=`
+      <div class="kicker">${esc(d.tag)}</div>
+      <h2>${esc(d.title)}</h2>
+      <div class="record">
+        <b>STATUS</b>
+        RESTRICTED / RP FILE
+      </div>
+      <div class="record">
+        <b>OPERATION</b>
+        OVERLORD
+      </div>
+      <div class="record">
+        <b>DESCRIPTION</b>
+        ${esc(d.description)}
+      </div>
+      <div class="info">
+        <b>ПРИМЕЧАНИЕ</b>
+        Материал относится к игровой RP-операции «OVERLORD».
+      </div>
+    `;
+
+    modal.classList.add('open');
+  };
+});
+
+document.getElementById('close').onclick=()=>{
+  modal.classList.remove('open');
+};
+
+modal.onclick=e=>{
+  if(e.target===modal) modal.classList.remove('open');
+};
+
+document.addEventListener('keydown',e=>{
+  if(e.key==="Escape") modal.classList.remove('open');
+});
+</script>
+
+</body>
+</html>
